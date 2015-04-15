@@ -3,13 +3,13 @@ var gulp = require('gulp'),
 	uglify = require('gulp-uglify'),
 	concat = require('gulp-concat'),
 	plumber = require('gulp-plumber'),
-	tsPath = "scripts/*.ts",
-	compilePath = "scripts/",
-	dist = "scripts";
+	tsPath = "typescript/*.ts",
+	compilePath = "js/compiled",
+	dist = "js/dist";
 
 gulp.task('compressScripts', function() {
 	gulp.src([
-		compilePath + '*.js'
+		compilePath + 'typescript/*.js'
 	])
 		.pipe(plumber())
 		.pipe(concat('scripts.min.js'))
