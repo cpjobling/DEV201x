@@ -13,23 +13,21 @@ function recipeTypeLoader() {
     recipes = JSON.parse(request.responseText);
     var rType = document.getElementById('RecipeType');
 
-    //TODO: Instantiate the class object on one line, then call the LoadRecipeTypes on a second line to fill the drop down box.
-    //make sure pass in the correct value to the function. HINT: the object you need to pass in has already been created above.
+    recipeGetter = new RecipeType(rType);
+    recipeGetter.LoadRecipeTypes(recipes);
 }
 
-window.onload = () => {    
+window.onload = () => {
     request.onload = recipeTypeLoader;
     request.open("get", "/JSON/recipeTypes.json", true);
     request.send();
 };
-    
+
 class RecipeType {
 
-    //TODO: crete a member variable to match the constructor
+    _recipeType: HTMLElement;
 
-
-    //TODO: the type is missing from the constructor. Fill that in. 
-    constructor(recipeType: ) {
+    constructor(recipeType: HTMLElement) {
         this._recipeType = recipeType;
     }
 
@@ -41,9 +39,4 @@ class RecipeType {
         }
     }
 
-
-}    
-
-
-
-
+}
