@@ -10,14 +10,14 @@ function loadRecipes() {
 
     catch (ex)
     { return; }
-   
+
     var classList = (<HTMLSelectElement> document.getElementById('RecipeClass'));
     var len: number = result[0].rType.length
-    classList.value = ""; 
+    classList.value = "";
     for (var i = 0; i < len; i++) {
         classList.value = classList.value + result[0].rType[i].type;
         classList.value = ((i + 1 == len) ? classList.value : classList.value + "\n");
-    } 
+    }
 
     var el = (<HTMLSelectElement> document.getElementById('recipeDesc'));
     el.innerHTML = result[0].rDesc;

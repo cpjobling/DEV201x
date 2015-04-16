@@ -15,45 +15,44 @@ class RecipeItem {
     name: string;
     class: RecipeClass[];
 
-    //TODO: Write the constructor logic for this class. You can replace the get/set logic you created in the Module 5 exercise with the constructor. 
-    //use "recipeTypeName" for the "name" parameter, and "recipeType" for the "class" parameter of the constructor. 
+    constructor (recipeTypeName: string, recipeType: RecipeClass[]) {
+      this.name = recipeTypeName;
+      this.class = recipeType;
+    }
 
-  
 }
 
-//FROM MODULE 5: Create a class called "RecipeClass" that includes a single member variable named "type" which has a "string" type declaration. 
-
-//TODO: Replace the get/set logic you created for Module 5 with constructor logic. Use "_type" as the parameter for the "type" variable in the constructor
 class RecipeClass {
-    //member variable goes here:
-    
+    type: string;
 
     //constructor logic goes here:
-
-
+    constructor(_type: string) {
+      this.type = _type;
+    }
 }
 
-//TODO: You're going to create a create a subclass for the RecipeItem class called "RecipeItemX". You'll notice that this referenced in the Recipes class already
-//1. In this class, you'll need to extend the RecipeItem class and create the correct 'super' method. HINT: the RecipeClass object needs to hold more than a single value.
-//2. Then create two member variables: one called '_recipeItems' to store the RecipeClass object and another called '_description" to store the description value.
-//3. Then create the constructor. HINT: you'll have to match the signature of the RecipeItem class and then extend it for the description field.
-//4. Finally, create two get blocks to return the description value and RecipeClass object to any calling method. 
-
 //extend the RecipeItems class
-class RecipeItemX  {
+class RecipeItemX  extends RecipeItem{
     //member variables go here
-
+    _recipeItems: RecipeClass[];
+    _description: string;
 
     //create your constructor
-    constructor() {
-        
+    constructor(recipeTypeName: string, recipeType: RecipeClass[], description: string) {
+      super(recipeTypeName, recipeType);
+      this._recipeItems = this.class; // assigned to super's field rather than parameter 
+      this._description = description;
     }
 
     //create a get block for the description field
-    get 
+    get description () : string {
+      return this._description;
+    }
 
-    //create a get block for the RecipeClass object 
-    get 
+    //create a get block for the RecipeClass object
+    get recipeItems () : RecipeClass[] {
+      return this._recipeItems;
+    }
 
 
 }
