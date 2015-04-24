@@ -13,8 +13,11 @@
         "!./node_modules/**/*.ts"
     ],
     "files": [
-        "./events.ts",
+        "./baseRecipeCategory.ts",
+        "./foodGroup.ts",
         "./initializer.ts",
-        "./recipesClass.ts"
+        "./recipeCategories.ts",
+        "./recipeLoader.ts",
+        "./renderer.ts"
     ]
 }
