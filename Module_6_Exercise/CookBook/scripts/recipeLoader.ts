@@ -31,9 +31,9 @@
                     category.details);
                 recipeCategories.items.push(recipeCategory);
             });
-            
+
             //Render the categories into the select
             renderer.renderCategories(recipeCategories);
         }
     }
-} 
+}
