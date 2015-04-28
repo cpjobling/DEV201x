@@ -1,37 +1,55 @@
+'use strict';
+
 var gulp = require('gulp'),
-	ts = require('gulp-typescript'),
-	uglify = require('gulp-uglify'),
-	concat = require('gulp-concat'),
-	plumber = require('gulp-plumber'),
-	tsPath = "typescript/*.ts",
-	compilePath = "js/compiled",
-	dist = "js/dist";
+    debug = require('gulp-debug'),
+    inject = require('gulp-inject'),
+    tsc = require('gulp-typescript'),
+    sourcemaps = require('gulp-sourcemaps'),
+    rimraf = require('gulp-rimraf'),
+    Config = require('./gulpfile.config');
 
-gulp.task('compressScripts', function() {
-	gulp.src([
-		compilePath + 'typescript/*.js'
-	])
-		.pipe(plumber())
-		.pipe(concat('scripts.min.js'))
-		.pipe(uglify())
-		.pipe(gulp.dest(dist));
+var config = new Config();
+
+/**
+ * Generates the app.d.ts references file dynamically from all application *.ts files.
+ */
+gulp.task('gen-ts-refs', function () {
+    var target = gulp.src(config.appTypeScriptReferences);
+    var sources = gulp.src([config.allTypeScript], {read: false});
+    return target.pipe(inject(sources, {
+        starttag: '//{',
+        endtag: '//}',
+        transform: function (filepath) {
+            return '/// <reference path="../..' + filepath + '" />';
+        }
+    })).pipe(gulp.dest(config.typings));
 });
 
-gulp.task('typescript', function() {
-	var tsResults = gulp.src(tsPath)
-				.pipe(ts({
-					target: 'ES5',
-					declarationFiles: false,
-					noExternalResolve: true
-				}));
-	tsResults.dts.pipe(gulp.dest(compilePath + '/tsdefinitions'));
-	return tsResults.js.pipe(gulp.dest(compilePath + '/typescript'));
+/**
+ * Compile TypeScript and include references to library and app .d.ts files.
+ */
+gulp.task('compile-ts', function () {
+    var sourceTsFiles = [config.allTypeScript,                //path to typescript files
+                         config.libraryTypeScriptDefinitions, //reference to library .d.ts files
+                         config.appTypeScriptReferences];     //reference to app.d.ts files
+
+    var tsResult = gulp.src(sourceTsFiles)
+                       .pipe(sourcemaps.init())
+                       .pipe(tsc({
+                           target: 'ES5',
+                           declarationFiles: false,
+                           noExternalResolve: true
+                       }));
+
+        tsResult.dts.pipe(gulp.dest(config.scriptsPath));
+        return tsResult.js
+                        .pipe(sourcemaps.write('.'))
+                        .pipe(gulp.dest(config.scriptsPath));
 });
+
 
 gulp.task('watch', function() {
-
-	gulp.watch([tsPath], ['typescript'])
-
+    gulp.watch([config.allTypeScript], ['compile-ts', 'gen-ts-refs']);
 });
 
-gulp.task('default', ['typescript', 'watch', 'compressScripts']);
+gulp.task('default', ['compile-ts', 'gen-ts-refs', 'watch']);
