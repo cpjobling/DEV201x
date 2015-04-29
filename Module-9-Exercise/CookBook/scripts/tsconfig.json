@@ -1,0 +1,29 @@
+{
+    "version": "1.4.1",
+    "compilerOptions": {
+        "target": "es5",
+        "module": "commonjs",
+        "declaration": false,
+        "noImplicitAny": false,
+        "removeComments": true,
+        "noLib": false
+    },
+    "filesGlob": [
+        "./**/*.ts",
+        "!./node_modules/**/*.ts"
+    ],
+    "files": [
+        "./baseRecipeCategory.ts",
+        "./foodGroup.ts",
+        "./ingredient.ts",
+        "./initializer.ts",
+        "./interfaces.ts",
+        "./recipeCategories.ts",
+        "./recipeCategory.ts",
+        "./recipeCategorySummary.ts",
+        "./recipeExample.ts",
+        "./recipeLoader.ts",
+        "./renderer.ts",
+        "./typings/jquery.d.ts"
+    ]
+}

@@ -5,7 +5,7 @@ class RecipeLoader {
 
     load() {
         $.getJSON(this.url,(data) => {
-            this.mapData(data);        
+            this.mapData(data);
         });
     }
 
@@ -15,15 +15,15 @@ class RecipeLoader {
             //Map category data from XHR call to our TypeScript RecipeCategories
             recipeCategories = new RecipeCategories();
             categories.forEach((category) => {
-                var recipeCategory = new RecipeCategory({
-                    name: category.title,
-                    foodGroups: this.getFoodGroups(category),
-                    description: category.details,
-                    examples: this.getExamples(category)
-                });
+                var recipeCategory = new RecipeCategory(
+                    category.title,
+                    this.getFoodGroups(category),
+                    category.details,
+                    this.getExamples(category)
+                );
                 recipeCategories.items.push(recipeCategory);
             });
-            
+
             //Render the categories into the select
             renderer.renderCategories(recipeCategories);
         }
@@ -41,7 +41,7 @@ class RecipeLoader {
     }
 
     getExamples(category) : IExample[] {
-        return category.examples.map((example) => { 
+        return category.examples.map((example) => {
             return new Example({
                 name: example.name,
                 ingredients: this.getIngredients(example),
@@ -55,4 +55,4 @@ class RecipeLoader {
             return new Ingredient(value);
         });
     }
-} 
+}

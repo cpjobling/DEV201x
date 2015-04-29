@@ -1,25 +1,15 @@
 ﻿var recipeCategories: RecipeCategories<IRecipeCategory>;
 var renderer = null;
 
-window.onload = () => { 
+window.onload = () => {
     var categoriesSelect = (<HTMLSelectElement> document.getElementById('RecipeCategory'));
-    //FROM MODULES 6-8
-    //categoriesSelect.onchange currently doesn't do anything.
-    //Assign a lambda expression to "onchange" that when called, 
-    //invokes the "loadRecipes" function that you'll see below. 
-    //The lambda parentheses will be empty.
-    //HINT: Refer to Module 4:Functions if you need help writing the lambda.
-    categoriesSelect.onchange = 
 
-    //FROM MODULES 6-8
-    //Create a new RecipeLoader instance and name it "loader".
-    //Pass the following string into the RecipeLoader's constructor:
-    //  '/JSON/recipeTypes.json'
-    //HINT: Use the "new" keyword to create the instance.
+    categoriesSelect.onchange = () => {
+      loadRecipes();
+    }
 
-    //FROM MODULES 6-8 
-    //Call the loader object's load() function ("loader" is the object 
-    //you created in the previous TODO)
+    var loader: RecipeLoader = new RecipeLoader('/JSON/recipeTypes.json');
+    loader.load();
 
     renderer = new Renderer();
 };
@@ -41,8 +31,3 @@ function loadRecipes() {
     }
     catch (ex) { alert(ex.message) }
 }
-  
-
-
-
-
